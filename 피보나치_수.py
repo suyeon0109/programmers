@@ -10,6 +10,8 @@ def solution(n):
                 fibo.append(fibo[i-2] + fibo[i-1])
             return fibo[n]
     
-    answer = fibonacci(n+1) % 1234567
+    print(fibo)
+    
+    answer = fibonacci(n) % 1234567
 
     return answer
