@@ -1,44 +1,34 @@
-from collections import deque
+import datetime
 
-def solution(n, t, m, p):
-    answer = ''
+def solution(fees, records):
 
-    num = 0
-    num2 = 0
-    index = 1
+    dic = {}
+    stk = []
+    answer = []
 
-    while len(answer) <= t:
-
-        lst = deque()
-        num2 = num
-        while num2 >= n: # num을 n진수로 바꾸는 과정. -> num < n일 경우 실행 x
-            remainder = num2%n
-            if remainder >= 10:
-                remainder = chr(remainder + 55)
-
-            lst.appendleft(str(remainder))
-            num2 //= n
-        
-        if num2 >= 10:
-            lst.appendleft(chr(num2+55))
+    for i in range(len(records)):
+        lst = records[i].split(' ')
+        if lst[-1] == 'IN':
+            stk.append(lst[1])
         else:
-            lst.appendleft(str(num2))
+            in_info = dic.get(lst[1])[0]
+            in_info = in_info.split(':')
+            in_hour, in_minute = int(in_info[0]), int(in_info[1])
+
+            out_info = lst[0].split(':')
+            out_hour, out_minute = int(out_info[0]), int(out_info[1])
+
+            ssum_time = (60 * out_hour + out_minute) - (60 * in_hour + in_minute)
+
+            if ssum_time > fees[0]:
+                answer.append(fees[1] + int((ssum_time - fees[0])/fees[2])*fees[3])
+            else:
+                answer.append(fees[0])
         
-        # s = n 진수 변환
-        s = ''.join(lst)
 
-        # s의 한 글자씩 검사 -> 튜브의 순서에 맞는 글자를 answer에 더함
-        for i in range(len(s)):
-            if index % m == p % m:
-                answer += s[i]
-                if len(answer) == t:
-                    return answer
-            index += 1 # 다음 글자의 인덱스
-        
-        num += 1
+    return answer
 
-
-# print(solution(16, 16, 2, 1))
-# print(solution(16, 16, 2, 2))
-print(solution(2, 4, 2, 1))
-# print(chr(65))
+# print(solution([180, 5000, 10, 600],["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"]))
+dic1 = {'a':1}
+t = dic1.pop('a')
+print(t)
