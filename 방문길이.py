@@ -8,8 +8,6 @@ def solution(dirs):
 
     moved = deque()
 
-    # coordinate = [[0]*11 for _ in range(11)]
-
     now = [5,5]
 
     for i in range(len(dirs)):
@@ -24,5 +22,3 @@ def solution(dirs):
                 answer += 1
 
     return answer
-
-print(solution("LULLLLLLU"))
